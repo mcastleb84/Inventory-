@@ -6,567 +6,1064 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#123c4a">
 <title>Inventory</title>
+
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#edf2f4;color:#203640}
-button,input,textarea,select{font:inherit}
-button{border:0;border-radius:8px;padding:11px 13px;font-weight:bold;cursor:pointer}
-button:disabled{opacity:.4;cursor:not-allowed}
-header{background:#123c4a;color:white;padding:20px 16px}
-.header-row{max-width:900px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:10px}
-.title-area,.header-actions{display:flex;align-items:center;gap:7px}
-.title-area{min-width:0}
-h1{font-size:25px;margin:0;overflow-wrap:anywhere}
-header button{background:#ffffff25;color:white}
-header p{max-width:900px;margin:9px auto 0;color:#d0e7eb;font-size:14px}
-.container{max-width:900px;margin:auto;padding:16px}
-.card{background:white;border-radius:12px;padding:18px;margin-bottom:16px;box-shadow:0 2px 8px #00000012}
-h2{font-size:19px;margin:0 0 15px}
-h3{font-size:16px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
-.stat{background:white;border-radius:12px;padding:15px 7px;text-align:center}
-.stat strong{display:block;font-size:21px;color:#087b89;overflow-wrap:anywhere}
-.stat span{font-size:12px}
-label{display:block;font-weight:bold;margin:12px 0 6px;font-size:14px}
-input,textarea,select{width:100%;padding:12px;border:1px solid #ccd7dc;border-radius:8px;background:white;color:#203640}
-textarea{min-height:80px;resize:vertical}
-.primary{background:#087b89;color:white}
-.secondary{background:#e1ecef;color:#123c4a}
-.danger{background:#b73535;color:white}
-.full{width:100%;margin-top:14px}
-.form-row{display:grid;grid-template-columns:2fr 1fr;gap:12px}
-.actions,.nav{display:flex;gap:10px;margin:16px 0}
-.actions button,.nav button{flex:1}
-.inventory-item,.history-entry{padding:14px 0;border-bottom:1px solid #e5ebee}
-.item-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.item-name{background:none;color:#087b89;text-decoration:underline;text-align:left;padding:5px 0;overflow-wrap:anywhere}
-.quantity-controls{display:flex;align-items:center;gap:9px}
-.quantity-controls button{background:#e1ecef;color:#123c4a;font-size:18px}
-.item-details,.history-date{font-size:12px;color:#657680;margin-top:7px}
-.history-entry p{font-size:14px;margin:6px 0}
-.history-entry strong{color:#087b89}
-.hidden{display:none!important}
-.empty{text-align:center;color:#71818a;padding:20px}
-.modal{position:fixed;inset:0;background:#0009;display:flex;align-items:center;justify-content:center;padding:16px;z-index:10}
-.modal-content{background:white;width:100%;max-width:440px;border-radius:14px;padding:20px;max-height:90vh;overflow:auto}
-.share-options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.share-options button{background:#e1ecef;color:#123c4a}
-footer{text-align:center;padding:20px;font-size:12px;color:#74838b}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #edf2f4;
+  color: #203640;
+}
+
+button, input, textarea, select {
+  font: inherit;
+}
+
+button {
+  border: 0;
+  border-radius: 8px;
+  padding: 11px 13px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+}
+
+header {
+  background: #123c4a;
+  color: white;
+  padding: 20px 16px;
+}
+
+.header-row {
+  max-width: 900px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.title-area, .header-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.title-area {
+  min-width: 0;
+}
+
+.header-actions {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+h1 {
+  font-size: 25px;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+header button {
+  background: #ffffff25;
+  color: white;
+}
+
+header p {
+  max-width: 900px;
+  margin: 9px auto 0;
+  color: #d0e7eb;
+  font-size: 14px;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 16px;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px #00000012;
+}
+
+h2 {
+  font-size: 19px;
+  margin: 0 0 15px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.stat {
+  background: white;
+  border-radius: 12px;
+  padding: 15px 7px;
+  text-align: center;
+}
+
+.stat strong {
+  display: block;
+  font-size: 21px;
+  color: #087b89;
+  overflow-wrap: anywhere;
+}
+
+.stat span {
+  font-size: 12px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin: 12px 0 6px;
+  font-size: 14px;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccd7dc;
+  border-radius: 8px;
+  background: white;
+  color: #203640;
+}
+
+textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.primary {
+  background: #087b89;
+  color: white;
+}
+
+.secondary {
+  background: #e1ecef;
+  color: #123c4a;
+}
+
+.danger {
+  background: #b73535;
+  color: white;
+}
+
+.full {
+  width: 100%;
+  margin-top: 14px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 12px;
+}
+
+.actions, .nav {
+  display: flex;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.actions button, .nav button {
+  flex: 1;
+}
+
+.inventory-item, .history-entry {
+  padding: 14px 0;
+  border-bottom: 1px solid #e5ebee;
+}
+
+.item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.item-name {
+  background: none;
+  color: #087b89;
+  text-decoration: underline;
+  text-align: left;
+  padding: 5px 0;
+  overflow-wrap: anywhere;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.quantity-controls button {
+  background: #e1ecef;
+  color: #123c4a;
+  font-size: 18px;
+}
+
+.item-details, .history-date {
+  font-size: 12px;
+  color: #657680;
+  margin-top: 7px;
+}
+
+.history-entry p {
+  font-size: 14px;
+  margin: 6px 0;
+}
+
+.history-entry strong {
+  color: #087b89;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.empty {
+  text-align: center;
+  color: #71818a;
+  padding: 20px;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: #0009;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 10;
+}
+
+.modal-content {
+  background: white;
+  width: 100%;
+  max-width: 440px;
+  border-radius: 14px;
+  padding: 20px;
+  max-height: 90vh;
+  overflow: auto;
+}
+
+.share-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.share-options button {
+  background: #e1ecef;
+  color: #123c4a;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 12px;
+  color: #74838b;
+}
 
 /* INTERACTIVE TUTORIAL */
-.tutorial-modal{z-index:30}
-.tutorial-content{max-width:480px}
-.tutorial-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.tutorial-progress{height:7px;background:#e1ecef;border-radius:10px;overflow:hidden;margin:15px 0}
-.tutorial-progress-fill{height:100%;background:#087b89;transition:width .25s}
-.tutorial-picture{background:#edf2f4;border-radius:12px;padding:14px;margin:15px 0;min-height:210px}
-.demo-phone{background:white;border:2px solid #c9d6da;border-radius:15px;padding:12px;max-width:290px;margin:auto;box-shadow:0 4px 12px #00000012}
-.demo-header{background:#123c4a;color:white;padding:12px;border-radius:8px;font-weight:bold;margin-bottom:10px}
-.demo-box{border:1px solid #d5e1e5;border-radius:7px;padding:10px;margin:7px 0;font-size:13px}
-.demo-button{background:#087b89;color:white;text-align:center;padding:10px;border-radius:7px;font-size:13px;font-weight:bold}
-.demo-highlight{outline:3px solid #f5b942;outline-offset:2px;animation:pulse 1.5s infinite}
-.demo-row{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.demo-small{font-size:11px;color:#647680}
-.tutorial-actions{display:flex;gap:10px;margin-top:18px}
-.tutorial-actions button{flex:1}
-@keyframes pulse{
-  0%,100%{outline-color:#f5b942}
-  50%{outline-color:#f5b94255}
+
+.tutorial-modal {
+  z-index: 30;
 }
 
-@media(max-width:480px){
-.container{padding:12px}
-.stat strong{font-size:18px}
-h1{font-size:21px}
-.header-row{align-items:flex-start}
-.header-actions{flex-wrap:wrap;justify-content:flex-end}
-header button{padding:8px;font-size:12px}
-.actions{flex-direction:column}
+.tutorial-content {
+  max-width: 480px;
 }
 
-@media print{
-header button,.no-print,.modal,footer{display:none!important}
-body{background:white}
-.card,.stat{box-shadow:none;border:1px solid #ddd}
+.tutorial-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.tutorial-progress {
+  height: 7px;
+  background: #e1ecef;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 15px 0;
+}
+
+.tutorial-progress-fill {
+  height: 100%;
+  background: #087b89;
+  transition: width .25s;
+}
+
+.tutorial-picture {
+  background: #edf2f4;
+  border-radius: 12px;
+  padding: 14px;
+  margin: 15px 0;
+  min-height: 210px;
+}
+
+.demo-phone {
+  background: white;
+  border: 2px solid #c9d6da;
+  border-radius: 15px;
+  padding: 12px;
+  max-width: 290px;
+  margin: auto;
+  box-shadow: 0 4px 12px #00000012;
+}
+
+.demo-header {
+  background: #123c4a;
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.demo-box {
+  border: 1px solid #d5e1e5;
+  border-radius: 7px;
+  padding: 10px;
+  margin: 7px 0;
+  font-size: 13px;
+}
+
+.demo-button {
+  background: #087b89;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.demo-highlight {
+  outline: 3px solid #f5b942;
+  outline-offset: 2px;
+  animation: pulse 1.5s infinite;
+}
+
+.demo-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.demo-small {
+  font-size: 11px;
+  color: #647680;
+}
+
+.tutorial-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.tutorial-actions button {
+  flex: 1;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    outline-color: #f5b942;
+  }
+  50% {
+    outline-color: #f5b94255;
+  }
+}
+
+@media(max-width:480px) {
+  .container {
+    padding: 12px;
+  }
+
+  .stat strong {
+    font-size: 18px;
+  }
+
+  h1 {
+    font-size: 21px;
+  }
+
+  .header-row {
+    align-items: flex-start;
+  }
+
+  header button {
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+}
+
+@media print {
+  header button, .no-print, .modal, footer {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+  }
+
+  .card, .stat {
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
 }
 </style>
 </head>
+
 <body>
 
 <header>
-<div class="header-row">
-  <div class="title-area">
-    <h1 id="appTitle">Inventory</h1>
-    <button id="renameButton" type="button" aria-label="Rename app">✎</button>
+  <div class="header-row">
+    <div class="title-area">
+      <h1 id="appTitle">Inventory</h1>
+      <button id="renameButton" type="button"
+        aria-label="Rename app">✎</button>
+    </div>
+
+    <div class="header-actions">
+      <button id="tutorialButton" type="button">
+        ? Tutorial
+      </button>
+      <button id="shareButton" type="button">
+        ↗ Share
+      </button>
+    </div>
   </div>
-  <div class="header-actions">
-    <button id="tutorialButton" type="button">? Tutorial</button>
-    <button id="shareButton" type="button">↗ Share</button>
-  </div>
-</div>
-<p>Keep your items organized and accounted for.</p>
+
+  <p>Keep your items organized and accounted for.</p>
 </header>
 
 <main class="container">
 
+<!-- NAVIGATION -->
+
 <div class="nav no-print">
-  <button class="primary" id="inventoryNav" type="button">Inventory</button>
-  <button class="secondary" id="historyNav" type="button">History</button>
+  <button class="primary" id="inventoryNav"
+    type="button">Inventory</button>
+  <button class="secondary" id="historyNav"
+    type="button">History</button>
 </div>
 
 <!-- INVENTORY DASHBOARD -->
+
 <section id="dashboard">
+
 <div class="stats">
-  <div class="stat"><strong id="totalItems">0</strong><span>Unique Items</span></div>
-  <div class="stat"><strong id="totalUnits">0</strong><span>Total Units</span></div>
-  <div class="stat"><strong id="totalValue">$0.00</strong><span>Stock Value</span></div>
+  <div class="stat">
+    <strong id="totalItems">0</strong>
+    <span>Unique Items</span>
+  </div>
+
+  <div class="stat">
+    <strong id="totalUnits">0</strong>
+    <span>Total Units</span>
+  </div>
+
+  <div class="stat">
+    <strong id="totalValue">$0.00</strong>
+    <span>Stock Value</span>
+  </div>
 </div>
 
 <div class="card no-print">
-<h2>Add Inventory</h2>
-<form id="addForm">
-<div class="form-row">
-  <div>
-    <label for="newName">Inventory Name</label>
-    <input id="newName" placeholder="Example: Shampoo" required>
-  </div>
-  <div>
-    <label for="newQuantity">Quantity</label>
-    <input id="newQuantity" type="number" min="0" step="1" value="1" required>
-  </div>
-</div>
-<button type="submit" class="primary full">+ Add Inventory</button>
-</form>
+  <h2>Add Inventory</h2>
+
+  <form id="addForm">
+    <div class="form-row">
+      <div>
+        <label for="newName">Inventory Name</label>
+        <input id="newName"
+          placeholder="Example: Shampoo" required>
+      </div>
+
+      <div>
+        <label for="newQuantity">Quantity</label>
+        <input id="newQuantity" type="number"
+          min="0" step="1" value="1" required>
+      </div>
+    </div>
+
+    <button type="submit" class="primary full">
+      + Add Inventory
+    </button>
+  </form>
 </div>
 
 <div class="card">
-<h2>Inventory List</h2>
-<input id="searchInput" class="no-print" type="search" placeholder="Search inventory...">
-<div id="inventoryList"></div>
+  <h2>Inventory List</h2>
+
+  <input id="searchInput" class="no-print"
+    type="search" placeholder="Search inventory...">
+
+  <div id="inventoryList"></div>
 </div>
+
 </section>
 
 <!-- ITEM PROFILE -->
+
 <section id="profilePage" class="hidden">
-<button class="secondary no-print" id="backButton" type="button">← Back to Inventory</button>
+
+<button class="secondary no-print" id="backButton"
+  type="button">← Back to Inventory</button>
 
 <div class="card" style="margin-top:16px">
-<h2>Inventory Profile</h2>
-<form id="profileForm">
-  <label for="profileName">Inventory Name</label>
-  <input id="profileName" required>
+  <h2>Inventory Profile</h2>
 
-  <label for="profileQuantity">Current Quantity</label>
-  <input id="profileQuantity" type="number" min="0" step="1" required>
+  <form id="profileForm">
+    <label for="profileName">Inventory Name</label>
+    <input id="profileName" required>
 
-  <label for="purchaseDate">Date Purchased</label>
-  <input id="purchaseDate" type="date">
+    <label for="profileQuantity">Current Quantity</label>
+    <input id="profileQuantity" type="number"
+      min="0" step="1" required>
 
-  <label for="purchaseStore">Where Was It Purchased?</label>
-  <input id="purchaseStore" placeholder="Store or supplier">
+    <label for="purchaseDate">Date Purchased</label>
+    <input id="purchaseDate" type="date">
 
-  <label for="purchaseCost">Cost Per Unit ($)</label>
-  <input id="purchaseCost" type="number" min="0" step="0.01" placeholder="0.00">
+    <label for="purchaseStore">
+      Where Was It Purchased?
+    </label>
+    <input id="purchaseStore"
+      placeholder="Store or supplier">
 
-  <label for="profileNotes">Additional Notes</label>
-  <textarea id="profileNotes" placeholder="Item details..."></textarea>
+    <label for="purchaseCost">Cost Per Unit ($)</label>
+    <input id="purchaseCost" type="number"
+      min="0" step="0.01" placeholder="0.00">
 
-  <label for="changeReason">Reason for Changes (Optional)</label>
-  <input id="changeReason" placeholder="Restocked, sold, damaged...">
+    <label for="profileNotes">Additional Notes</label>
+    <textarea id="profileNotes"
+      placeholder="Item details..."></textarea>
 
-  <div class="card" style="background:#f3f7f8;margin-top:15px">
-    <strong>Total Inventory Value</strong>
-    <p id="profileValue">$0.00</p>
-  </div>
+    <label for="changeReason">
+      Reason for Changes (Optional)
+    </label>
+    <input id="changeReason"
+      placeholder="Restocked, sold, damaged...">
 
-  <div class="actions no-print">
-    <button type="submit" class="primary">Save Changes</button>
-    <button type="button" class="danger" id="deleteButton">Delete Item</button>
-  </div>
-</form>
+    <div class="card"
+      style="background:#f3f7f8;margin-top:15px">
+      <strong>Total Inventory Value</strong>
+      <p id="profileValue">$0.00</p>
+    </div>
+
+    <div class="actions no-print">
+      <button type="submit" class="primary">
+        Save Changes
+      </button>
+      <button type="button" class="danger"
+        id="deleteButton">Delete Item</button>
+    </div>
+  </form>
 </div>
 
 <div class="card">
-<h2>Item History</h2>
-<div id="itemHistory"></div>
+  <h2>Item History</h2>
+  <div id="itemHistory"></div>
 </div>
+
 </section>
 
 <!-- HISTORY PAGE -->
+
 <section id="historyPage" class="hidden">
 <div class="card">
-<h2>Inventory History</h2>
-<label for="historySearch">Search History</label>
-<input id="historySearch" type="search" placeholder="Search item or reason...">
+  <h2>Inventory History</h2>
 
-<label for="historyFilter">Filter by Action</label>
-<select id="historyFilter">
-<option value="all">All Activity</option>
-<option value="Added">Added</option>
-<option value="Increased">Increased</option>
-<option value="Decreased">Decreased</option>
-<option value="Edited">Edited</option>
-<option value="Deleted">Deleted</option>
-</select>
+  <label for="historySearch">Search History</label>
+  <input id="historySearch" type="search"
+    placeholder="Search item or reason...">
 
-<button class="secondary full no-print" id="exportHistory" type="button">
-Download History CSV
-</button>
-<div id="fullHistory"></div>
+  <label for="historyFilter">Filter by Action</label>
+  <select id="historyFilter">
+    <option value="all">All Activity</option>
+    <option value="Added">Added</option>
+    <option value="Increased">Increased</option>
+    <option value="Decreased">Decreased</option>
+    <option value="Edited">Edited</option>
+    <option value="Deleted">Deleted</option>
+  </select>
+
+  <button class="secondary full no-print"
+    id="exportHistory" type="button">
+    Download History CSV
+  </button>
+
+  <div id="fullHistory"></div>
 </div>
 </section>
 
 </main>
 
-<footer>Inventory and history are saved locally in this browser.</footer>
+<footer>
+  Inventory and history are saved locally in this browser.
+</footer>
 
 <!-- RENAME MODAL -->
-<div id="renameModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="renameHeading">
+
+<div id="renameModal" class="modal hidden"
+  role="dialog" aria-modal="true"
+  aria-labelledby="renameHeading">
+
 <div class="modal-content">
-<h2 id="renameHeading">Change App Title</h2>
-<form id="renameForm">
-<label for="newTitle">New App Title</label>
-<input id="newTitle" maxlength="80" required>
-<div class="actions">
-<button type="submit" class="primary">Save Title</button>
-<button type="button" class="secondary" id="cancelRename">Cancel</button>
-</div>
-</form>
+  <h2 id="renameHeading">Change App Title</h2>
+
+  <form id="renameForm">
+    <label for="newTitle">New App Title</label>
+    <input id="newTitle" maxlength="80" required>
+
+    <div class="actions">
+      <button type="submit" class="primary">
+        Save Title
+      </button>
+      <button type="button" class="secondary"
+        id="cancelRename">Cancel</button>
+    </div>
+  </form>
 </div>
 </div>
 
 <!-- SHARE MODAL -->
-<div id="shareModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="shareHeading">
+
+<div id="shareModal" class="modal hidden"
+  role="dialog" aria-modal="true"
+  aria-labelledby="shareHeading">
+
 <div class="modal-content">
-<h2 id="shareHeading">Share Inventory</h2>
-<p>Save or share your inventory report.</p>
-<div class="share-options">
-<button id="saveCSV" type="button">Save CSV</button>
-<button id="shareEmail" type="button">Email</button>
-<button id="shareText" type="button">Text</button>
-<button id="shareMessenger" type="button">Messenger</button>
-<button id="shareNative" type="button">More / Save</button>
-<button id="sharePrint" type="button">Print</button>
-</div>
-<button class="secondary full" id="closeShare" type="button">Close</button>
+  <h2 id="shareHeading">Share Inventory</h2>
+  <p>Save or share your inventory report.</p>
+
+  <div class="share-options">
+    <button id="saveCSV" type="button">Save CSV</button>
+    <button id="shareEmail" type="button">Email</button>
+    <button id="shareText" type="button">Text</button>
+    <button id="shareMessenger" type="button">
+      Messenger
+    </button>
+    <button id="shareNative" type="button">
+      More / Save
+    </button>
+    <button id="sharePrint" type="button">Print</button>
+  </div>
+
+  <button class="secondary full" id="closeShare"
+    type="button">Close</button>
 </div>
 </div>
 
 <!-- INTERACTIVE TUTORIAL MODAL -->
-<div id="tutorialModal" class="modal tutorial-modal hidden" role="dialog" aria-modal="true" aria-labelledby="tutorialTitle">
+
+<div id="tutorialModal"
+  class="modal tutorial-modal hidden"
+  role="dialog" aria-modal="true"
+  aria-labelledby="tutorialTitle">
+
 <div class="modal-content tutorial-content">
-<div class="tutorial-top">
-  <strong id="tutorialCounter">Step 1 of 8</strong>
-  <button class="secondary" id="closeTutorial" type="button">✕</button>
-</div>
-<div class="tutorial-progress">
-  <div class="tutorial-progress-fill" id="tutorialProgress"></div>
-</div>
-<h2 id="tutorialTitle">Welcome</h2>
-<p id="tutorialDescription"></p>
-<div class="tutorial-picture" id="tutorialPicture"></div>
-<div class="tutorial-actions">
-  <button class="secondary" id="tutorialBack" type="button">Back</button>
-  <button class="primary" id="tutorialNext" type="button">Next →</button>
-</div>
+
+  <div class="tutorial-top">
+    <strong id="tutorialCounter">Step 1 of 8</strong>
+    <button class="secondary" id="closeTutorial"
+      type="button">✕</button>
+  </div>
+
+  <div class="tutorial-progress">
+    <div class="tutorial-progress-fill"
+      id="tutorialProgress"></div>
+  </div>
+
+  <h2 id="tutorialTitle">Welcome</h2>
+  <p id="tutorialDescription"></p>
+
+  <div class="tutorial-picture"
+    id="tutorialPicture"></div>
+
+  <div class="tutorial-actions">
+    <button class="secondary" id="tutorialBack"
+      type="button">Back</button>
+    <button class="primary" id="tutorialNext"
+      type="button">Next →</button>
+  </div>
+
 </div>
 </div>
 
 <script>
 "use strict";
 
-const STORAGE_KEY="inventory_app_v1";
-const TITLE_KEY="inventory_app_title_v1";
-const HISTORY_KEY="inventory_app_history_v1";
+const STORAGE_KEY = "inventory_app_v1";
+const TITLE_KEY = "inventory_app_title_v1";
+const HISTORY_KEY = "inventory_app_history_v1";
 
-const $=id=>document.getElementById(id);
+const $ = id => document.getElementById(id);
 
-function loadArray(key){
-  try{
-    const parsed=JSON.parse(localStorage.getItem(key)||"[]");
-    return Array.isArray(parsed)?parsed:[];
-  }catch(e){
+function loadArray(key) {
+  try {
+    const parsed = JSON.parse(
+      localStorage.getItem(key) || "[]"
+    );
+    return Array.isArray(parsed) ? parsed : [];
+  } catch(e) {
     console.error(e);
     return [];
   }
 }
 
-let inventory=loadArray(STORAGE_KEY);
-let history=loadArray(HISTORY_KEY);
-let activeItemId=null;
-let appName=localStorage.getItem(TITLE_KEY)||"Inventory";
+let inventory = loadArray(STORAGE_KEY);
+let history = loadArray(HISTORY_KEY);
+let activeItemId = null;
+let appName = localStorage.getItem(TITLE_KEY)
+  || "Inventory";
 
-function persist(){
-  try{
-    localStorage.setItem(STORAGE_KEY,JSON.stringify(inventory));
-    localStorage.setItem(HISTORY_KEY,JSON.stringify(history));
+function persist() {
+  try {
+    localStorage.setItem(
+      STORAGE_KEY, JSON.stringify(inventory)
+    );
+    localStorage.setItem(
+      HISTORY_KEY, JSON.stringify(history)
+    );
     return true;
-  }catch(e){
+  } catch(e) {
     alert("Unable to save. Check browser storage.");
     return false;
   }
 }
 
-function money(value){
-  return new Intl.NumberFormat("en-US",{
-    style:"currency",currency:"USD"
-  }).format(value||0);
+function money(value) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD"
+  }).format(value || 0);
 }
 
-function createId(){
-  return window.crypto?.randomUUID?.()||
-    Date.now()+"-"+Math.random().toString(36).slice(2);
+function createId() {
+  return window.crypto?.randomUUID?.()
+    || Date.now() + "-" +
+       Math.random().toString(36).slice(2);
 }
 
-function getItem(id){
-  return inventory.find(item=>item.id===id);
+function getItem(id) {
+  return inventory.find(item => item.id === id);
 }
 
-function recordHistory(item,action,change,reason){
+function recordHistory(item, action, change, reason) {
   history.unshift({
-    id:createId(),
-    itemId:item.id,
-    name:item.name,
+    id: createId(),
+    itemId: item.id,
+    name: item.name,
     action,
     change,
-    quantityAfter:item.quantity,
-    reason:reason||"",
-    date:new Date().toISOString()
+    quantityAfter: item.quantity,
+    reason: reason || "",
+    date: new Date().toISOString()
   });
 }
 
-function updateTitle(){
-  $("appTitle").textContent=appName;
-  document.title=appName;
+function updateTitle() {
+  $("appTitle").textContent = appName;
+  document.title = appName;
 }
+
 updateTitle();
 
 // NAVIGATION
-function showPage(page){
-  ["dashboard","profilePage","historyPage"].forEach(id=>
-    $(id).classList.add("hidden")
-  );
+
+function showPage(page) {
+  ["dashboard", "profilePage", "historyPage"]
+    .forEach(id => $(id).classList.add("hidden"));
+
   $(page).classList.remove("hidden");
 
-  $("inventoryNav").className=
-    page==="historyPage"?"secondary":"primary";
-  $("historyNav").className=
-    page==="historyPage"?"primary":"secondary";
+  $("inventoryNav").className =
+    page === "historyPage" ? "secondary" : "primary";
 
-  if(page==="dashboard")renderInventory();
-  if(page==="historyPage")renderHistory();
+  $("historyNav").className =
+    page === "historyPage" ? "primary" : "secondary";
 
-  window.scrollTo(0,0);
+  if(page === "dashboard") renderInventory();
+  if(page === "historyPage") renderHistory();
+
+  window.scrollTo(0, 0);
 }
 
-$("inventoryNav").onclick=()=>showPage("dashboard");
-$("historyNav").onclick=()=>showPage("historyPage");
-$("backButton").onclick=()=>showPage("dashboard");
+$("inventoryNav").onclick = () => showPage("dashboard");
+$("historyNav").onclick = () => showPage("historyPage");
+$("backButton").onclick = () => showPage("dashboard");
 
 // ADD INVENTORY
-$("addForm").addEventListener("submit",e=>{
+
+$("addForm").addEventListener("submit", e => {
   e.preventDefault();
 
-  const name=$("newName").value.trim();
-  const quantity=Number($("newQuantity").value);
+  const name = $("newName").value.trim();
+  const quantity = Number($("newQuantity").value);
 
-  if(!name||!Number.isSafeInteger(quantity)||quantity<0){
+  if(!name || !Number.isSafeInteger(quantity)
+     || quantity < 0) {
     alert("Enter a valid name and quantity.");
     return;
   }
 
-  const item={
-    id:createId(),name,quantity,
-    purchaseDate:"",store:"",cost:0,notes:""
+  const item = {
+    id: createId(),
+    name,
+    quantity,
+    purchaseDate: "",
+    store: "",
+    cost: 0,
+    notes: ""
   };
 
   inventory.push(item);
-  recordHistory(item,"Added",quantity,"Initial inventory");
+  recordHistory(item, "Added", quantity,
+    "Initial inventory");
 
-  if(!persist()){
+  if(!persist()) {
     inventory.pop();
     history.shift();
     return;
   }
 
   $("addForm").reset();
-  $("newQuantity").value=1;
+  $("newQuantity").value = 1;
   renderInventory();
 });
 
 // INVENTORY DISPLAY
-function renderInventory(){
-  const list=$("inventoryList");
+
+function renderInventory() {
+  const list = $("inventoryList");
   list.replaceChildren();
 
-  const search=$("searchInput").value.toLowerCase();
-  const filtered=inventory.filter(item=>
+  const search = $("searchInput").value.toLowerCase();
+
+  const filtered = inventory.filter(item =>
     item.name.toLowerCase().includes(search)
   );
 
-  if(!filtered.length){
-    const p=document.createElement("p");
-    p.className="empty";
-    p.textContent=inventory.length?
-      "No matching items.":"No inventory added yet.";
+  if(!filtered.length) {
+    const p = document.createElement("p");
+    p.className = "empty";
+    p.textContent = inventory.length
+      ? "No matching items."
+      : "No inventory added yet.";
     list.appendChild(p);
   }
 
-  filtered.forEach(item=>{
-    const wrapper=document.createElement("div");
-    wrapper.className="inventory-item";
+  filtered.forEach(item => {
+    const wrapper = document.createElement("div");
+    wrapper.className = "inventory-item";
 
-    const top=document.createElement("div");
-    top.className="item-top";
+    const top = document.createElement("div");
+    top.className = "item-top";
 
-    const name=document.createElement("button");
-    name.type="button";
-    name.className="item-name";
-    name.textContent=item.name;
-    name.onclick=()=>openProfile(item.id);
+    const name = document.createElement("button");
+    name.type = "button";
+    name.className = "item-name";
+    name.textContent = item.name;
+    name.onclick = () => openProfile(item.id);
 
-    const controls=document.createElement("div");
-    controls.className="quantity-controls no-print";
+    const controls = document.createElement("div");
+    controls.className = "quantity-controls no-print";
 
-    const minus=document.createElement("button");
-    minus.type="button";
-    minus.textContent="−";
-    minus.onclick=()=>changeQuantity(item.id,-1);
+    const minus = document.createElement("button");
+    minus.type = "button";
+    minus.textContent = "−";
+    minus.onclick = () => changeQuantity(item.id, -1);
 
-    const count=document.createElement("strong");
-    count.textContent=item.quantity;
+    const count = document.createElement("strong");
+    count.textContent = item.quantity;
 
-    const plus=document.createElement("button");
-    plus.type="button";
-    plus.textContent="+";
-    plus.onclick=()=>changeQuantity(item.id,1);
+    const plus = document.createElement("button");
+    plus.type = "button";
+    plus.textContent = "+";
+    plus.onclick = () => changeQuantity(item.id, 1);
 
-    controls.append(minus,count,plus);
-    top.append(name,controls);
+    controls.append(minus, count, plus);
+    top.append(name, controls);
 
-    const details=document.createElement("div");
-    details.className="item-details";
-    details.textContent="Quantity: "+item.quantity+
-      " | Stock value: "+money(item.quantity*item.cost);
+    const details = document.createElement("div");
+    details.className = "item-details";
+    details.textContent =
+      "Quantity: " + item.quantity +
+      " | Stock value: " +
+      money(item.quantity * item.cost);
 
-    wrapper.append(top,details);
+    wrapper.append(top, details);
     list.appendChild(wrapper);
   });
 
   updateDashboard();
 }
 
-function updateDashboard(){
-  $("totalItems").textContent=inventory.length;
-  $("totalUnits").textContent=inventory.reduce(
-    (sum,item)=>sum+item.quantity,0
+function updateDashboard() {
+  $("totalItems").textContent = inventory.length;
+
+  $("totalUnits").textContent = inventory.reduce(
+    (sum, item) => sum + item.quantity, 0
   );
-  $("totalValue").textContent=money(inventory.reduce(
-    (sum,item)=>sum+item.quantity*item.cost,0
-  ));
+
+  $("totalValue").textContent = money(
+    inventory.reduce(
+      (sum, item) =>
+        sum + item.quantity * item.cost, 0
+    )
+  );
 }
 
 // QUICK QUANTITY CHANGES
-function changeQuantity(id,delta){
-  const item=getItem(id);
-  if(!item)return;
 
-  const oldQuantity=item.quantity;
-  const next=oldQuantity+delta;
-  if(next<0||!Number.isSafeInteger(next))return;
+function changeQuantity(id, delta) {
+  const item = getItem(id);
+  if(!item) return;
 
-  const oldHistory=history.slice();
-  item.quantity=next;
+  const oldQuantity = item.quantity;
+  const next = oldQuantity + delta;
 
-  recordHistory(item,delta>0?"Increased":"Decreased",
-    delta,delta>0?"Quick restock":"Quick removal");
+  if(next < 0 || !Number.isSafeInteger(next)) return;
 
-  if(!persist()){
-    item.quantity=oldQuantity;
-    history=oldHistory;
+  const oldHistory = history.slice();
+  item.quantity = next;
+
+  recordHistory(
+    item,
+    delta > 0 ? "Increased" : "Decreased",
+    delta,
+    delta > 0 ? "Quick restock" : "Quick removal"
+  );
+
+  if(!persist()) {
+    item.quantity = oldQuantity;
+    history = oldHistory;
     return;
   }
+
   renderInventory();
 }
 
 // ITEM PROFILE
-function openProfile(id){
-  const item=getItem(id);
-  if(!item)return;
 
-  activeItemId=id;
-  $("profileName").value=item.name;
-  $("profileQuantity").value=item.quantity;
-  $("purchaseDate").value=item.purchaseDate||"";
-  $("purchaseStore").value=item.store||"";
-  $("purchaseCost").value=item.cost||"";
-  $("profileNotes").value=item.notes||"";
-  $("changeReason").value="";
+function openProfile(id) {
+  const item = getItem(id);
+  if(!item) return;
+
+  activeItemId = id;
+
+  $("profileName").value = item.name;
+  $("profileQuantity").value = item.quantity;
+  $("purchaseDate").value = item.purchaseDate || "";
+  $("purchaseStore").value = item.store || "";
+  $("purchaseCost").value = item.cost || "";
+  $("profileNotes").value = item.notes || "";
+  $("changeReason").value = "";
 
   updateProfileValue();
   renderItemHistory(id);
   showPage("profilePage");
 }
 
-function updateProfileValue(){
-  const quantity=Number($("profileQuantity").value)||0;
-  const cost=Number($("purchaseCost").value)||0;
-  $("profileValue").textContent=money(quantity*cost);
+function updateProfileValue() {
+  const quantity =
+    Number($("profileQuantity").value) || 0;
+  const cost =
+    Number($("purchaseCost").value) || 0;
+
+  $("profileValue").textContent =
+    money(quantity * cost);
 }
 
-$("profileQuantity").oninput=updateProfileValue;
-$("purchaseCost").oninput=updateProfileValue;
+$("profileQuantity").oninput = updateProfileValue;
+$("purchaseCost").oninput = updateProfileValue;
 
 // SAVE PROFILE
-$("profileForm").addEventListener("submit",e=>{
+
+$("profileForm").addEventListener("submit", e => {
   e.preventDefault();
 
-  const item=getItem(activeItemId);
-  if(!item)return;
+  const item = getItem(activeItemId);
+  if(!item) return;
 
-  const name=$("profileName").value.trim();
-  const quantity=Number($("profileQuantity").value);
-  const cost=Number($("purchaseCost").value||0);
+  const name = $("profileName").value.trim();
+  const quantity = Number($("profileQuantity").value);
+  const cost = Number($("purchaseCost").value || 0);
 
-  if(!name||!Number.isSafeInteger(quantity)||
-     quantity<0||!Number.isFinite(cost)||cost<0){
+  if(!name || !Number.isSafeInteger(quantity)
+     || quantity < 0 || !Number.isFinite(cost)
+     || cost < 0) {
     alert("Enter valid inventory information.");
     return;
   }
 
-  const previous={...item};
-  const previousHistory=history.slice();
-  const reason=$("changeReason").value.trim();
+  const previous = {...item};
+  const previousHistory = history.slice();
+  const reason = $("changeReason").value.trim();
 
-  Object.assign(item,{
-    name,quantity,
-    purchaseDate:$("purchaseDate").value,
-    store:$("purchaseStore").value.trim(),
+  Object.assign(item, {
+    name,
+    quantity,
+    purchaseDate: $("purchaseDate").value,
+    store: $("purchaseStore").value.trim(),
     cost,
-    notes:$("profileNotes").value.trim()
+    notes: $("profileNotes").value.trim()
   });
 
-  const delta=quantity-previous.quantity;
-  const detailsChanged=
-    name!==previous.name||
-    item.purchaseDate!==previous.purchaseDate||
-    item.store!==previous.store||
-    cost!==previous.cost||
-    item.notes!==previous.notes;
+  const delta = quantity - previous.quantity;
 
-  if(delta!==0){
-    recordHistory(item,delta>0?"Increased":"Decreased",
-      delta,reason||"Profile quantity update");
+  const detailsChanged =
+    name !== previous.name ||
+    item.purchaseDate !== previous.purchaseDate ||
+    item.store !== previous.store ||
+    cost !== previous.cost ||
+    item.notes !== previous.notes;
+
+  if(delta !== 0) {
+    recordHistory(
+      item,
+      delta > 0 ? "Increased" : "Decreased",
+      delta,
+      reason || "Profile quantity update"
+    );
   }
 
-  if(detailsChanged){
-    recordHistory(item,"Edited",0,
-      reason||"Profile information updated");
+  if(detailsChanged) {
+    recordHistory(
+      item, "Edited", 0,
+      reason || "Profile information updated"
+    );
   }
 
-  if(!persist()){
-    Object.assign(item,previous);
-    history=previousHistory;
+  if(!persist()) {
+    Object.assign(item, previous);
+    history = previousHistory;
     return;
   }
 
@@ -574,282 +1071,329 @@ $("profileForm").addEventListener("submit",e=>{
 });
 
 // DELETE ITEM
-$("deleteButton").onclick=()=>{
-  const item=getItem(activeItemId);
-  if(!item)return;
-  if(!confirm('Delete "'+item.name+'"?'))return;
 
-  const oldInventory=inventory.slice();
-  const oldHistory=history.slice();
+$("deleteButton").onclick = () => {
+  const item = getItem(activeItemId);
+  if(!item) return;
 
-  recordHistory(item,"Deleted",-item.quantity,
-    "Inventory item deleted");
+  if(!confirm('Delete "' + item.name + '"?')) return;
 
-  inventory=inventory.filter(x=>x.id!==activeItemId);
+  const oldInventory = inventory.slice();
+  const oldHistory = history.slice();
 
-  if(!persist()){
-    inventory=oldInventory;
-    history=oldHistory;
+  recordHistory(
+    item, "Deleted", -item.quantity,
+    "Inventory item deleted"
+  );
+
+  inventory = inventory.filter(
+    x => x.id !== activeItemId
+  );
+
+  if(!persist()) {
+    inventory = oldInventory;
+    history = oldHistory;
     return;
   }
 
-  activeItemId=null;
+  activeItemId = null;
   showPage("dashboard");
 };
 
-$("searchInput").oninput=renderInventory;
+$("searchInput").oninput = renderInventory;
 
-// HISTORY
-function historyElement(entry){
-  const div=document.createElement("div");
-  div.className="history-entry";
+// HISTORY DISPLAY
 
-  const title=document.createElement("strong");
-  title.textContent=entry.name+" — "+entry.action;
+function historyElement(entry) {
+  const div = document.createElement("div");
+  div.className = "history-entry";
 
-  const date=document.createElement("div");
-  date.className="history-date";
-  date.textContent=new Date(entry.date).toLocaleString();
+  const title = document.createElement("strong");
+  title.textContent =
+    entry.name + " — " + entry.action;
 
-  const quantity=document.createElement("p");
-  quantity.textContent="Quantity change: "+
-    (entry.change>0?"+":"")+entry.change+
-    " | Quantity after: "+entry.quantityAfter;
+  const date = document.createElement("div");
+  date.className = "history-date";
+  date.textContent =
+    new Date(entry.date).toLocaleString();
 
-  const reason=document.createElement("p");
-  reason.textContent="Reason: "+(entry.reason||"Not specified");
+  const quantity = document.createElement("p");
+  quantity.textContent =
+    "Quantity change: " +
+    (entry.change > 0 ? "+" : "") +
+    entry.change +
+    " | Quantity after: " +
+    entry.quantityAfter;
 
-  div.append(title,date,quantity,reason);
+  const reason = document.createElement("p");
+  reason.textContent =
+    "Reason: " + (entry.reason || "Not specified");
+
+  div.append(title, date, quantity, reason);
   return div;
 }
 
-function renderItemHistory(id){
-  const container=$("itemHistory");
+function renderItemHistory(id) {
+  const container = $("itemHistory");
   container.replaceChildren();
 
-  const entries=history.filter(entry=>entry.itemId===id);
-  if(!entries.length){
-    container.textContent="No history recorded yet.";
+  const entries = history.filter(
+    entry => entry.itemId === id
+  );
+
+  if(!entries.length) {
+    container.textContent = "No history recorded yet.";
     return;
   }
 
-  entries.forEach(entry=>
+  entries.forEach(entry =>
     container.appendChild(historyElement(entry))
   );
 }
 
-function renderHistory(){
-  const container=$("fullHistory");
+function renderHistory() {
+  const container = $("fullHistory");
   container.replaceChildren();
 
-  const search=$("historySearch").value.toLowerCase();
-  const filter=$("historyFilter").value;
+  const search =
+    $("historySearch").value.toLowerCase();
+  const filter = $("historyFilter").value;
 
-  const entries=history.filter(entry=>{
-    const matchesSearch=
-      entry.name.toLowerCase().includes(search)||
-      (entry.reason||"").toLowerCase().includes(search);
-    const matchesFilter=
-      filter==="all"||entry.action===filter;
-    return matchesSearch&&matchesFilter;
+  const entries = history.filter(entry => {
+    const matchesSearch =
+      entry.name.toLowerCase().includes(search) ||
+      (entry.reason || "").toLowerCase().includes(search);
+
+    const matchesFilter =
+      filter === "all" || entry.action === filter;
+
+    return matchesSearch && matchesFilter;
   });
 
-  if(!entries.length){
-    container.textContent="No matching history.";
+  if(!entries.length) {
+    container.textContent = "No matching history.";
     return;
   }
 
-  entries.forEach(entry=>
+  entries.forEach(entry =>
     container.appendChild(historyElement(entry))
   );
 }
 
-$("historySearch").oninput=renderHistory;
-$("historyFilter").onchange=renderHistory;
+$("historySearch").oninput = renderHistory;
+$("historyFilter").onchange = renderHistory;
 
 // RENAME APP
-$("renameButton").onclick=()=>{
-  $("newTitle").value=appName;
+
+$("renameButton").onclick = () => {
+  $("newTitle").value = appName;
   $("renameModal").classList.remove("hidden");
 };
 
-$("cancelRename").onclick=()=>
+$("cancelRename").onclick = () =>
   $("renameModal").classList.add("hidden");
 
-$("renameForm").addEventListener("submit",e=>{
+$("renameForm").addEventListener("submit", e => {
   e.preventDefault();
-  const title=$("newTitle").value.trim();
-  if(!title)return;
 
-  try{
-    localStorage.setItem(TITLE_KEY,title);
-  }catch(e){
+  const title = $("newTitle").value.trim();
+  if(!title) return;
+
+  try {
+    localStorage.setItem(TITLE_KEY, title);
+  } catch(e) {
     alert("Unable to save title.");
     return;
   }
 
-  appName=title;
+  appName = title;
   updateTitle();
   $("renameModal").classList.add("hidden");
 });
 
 // CSV EXPORT
-function csvCell(value){
-  return '"'+String(value??"").replace(/"/g,'""')+'"';
+
+function csvCell(value) {
+  return '"' +
+    String(value ?? "").replace(/"/g, '""') +
+    '"';
 }
 
-function downloadCSV(filename,rows){
-  const csv="\uFEFF"+rows.map(row=>
-    row.map(csvCell).join(",")
+function downloadCSV(filename, rows) {
+  const csv = "\uFEFF" + rows.map(
+    row => row.map(csvCell).join(",")
   ).join("\r\n");
 
-  const blob=new Blob([csv],{
-    type:"text/csv;charset=utf-8"
+  const blob = new Blob([csv], {
+    type: "text/csv;charset=utf-8"
   });
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement("a");
 
-  a.href=url;
-  a.download=filename;
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+
+  a.href = url;
+  a.download = filename;
   document.body.appendChild(a);
   a.click();
   a.remove();
-  setTimeout(()=>URL.revokeObjectURL(url),1000);
+
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-function inventoryCSV(){
-  const rows=[[
-    "Name","Quantity","Purchase Date","Supplier",
-    "Cost Per Unit","Stock Value","Notes"
+function inventoryCSV() {
+  const rows = [[
+    "Name", "Quantity", "Purchase Date",
+    "Supplier", "Cost Per Unit",
+    "Stock Value", "Notes"
   ]];
 
-  inventory.forEach(item=>rows.push([
-    item.name,item.quantity,item.purchaseDate,item.store,
-    item.cost,(item.quantity*item.cost).toFixed(2),item.notes
+  inventory.forEach(item => rows.push([
+    item.name,
+    item.quantity,
+    item.purchaseDate,
+    item.store,
+    item.cost,
+    (item.quantity * item.cost).toFixed(2),
+    item.notes
   ]));
+
   return rows;
 }
 
-function historyCSV(){
-  const rows=[[
-    "Date","Item","Action","Quantity Change",
-    "Quantity After","Reason"
+function historyCSV() {
+  const rows = [[
+    "Date", "Item", "Action",
+    "Quantity Change", "Quantity After", "Reason"
   ]];
 
-  history.forEach(entry=>rows.push([
-    entry.date,entry.name,entry.action,entry.change,
-    entry.quantityAfter,entry.reason
+  history.forEach(entry => rows.push([
+    entry.date,
+    entry.name,
+    entry.action,
+    entry.change,
+    entry.quantityAfter,
+    entry.reason
   ]));
+
   return rows;
 }
 
-$("saveCSV").onclick=()=>
-  downloadCSV("inventory-report.csv",inventoryCSV());
+$("saveCSV").onclick = () =>
+  downloadCSV("inventory-report.csv", inventoryCSV());
 
-$("exportHistory").onclick=()=>
-  downloadCSV("inventory-history.csv",historyCSV());
+$("exportHistory").onclick = () =>
+  downloadCSV("inventory-history.csv", historyCSV());
 
 // SHARE REPORT
-function reportText(){
-  const lines=[
-    appName+" - Inventory Report",
-    "Date: "+new Date().toLocaleDateString(),
+
+function reportText() {
+  const lines = [
+    appName + " - Inventory Report",
+    "Date: " + new Date().toLocaleDateString(),
     "",
-    "Unique items: "+inventory.length,
-    "Total units: "+inventory.reduce(
-      (s,i)=>s+i.quantity,0
-    ),
-    "Stock value: "+money(inventory.reduce(
-      (s,i)=>s+i.quantity*i.cost,0
-    )),
+    "Unique items: " + inventory.length,
+    "Total units: " +
+      inventory.reduce((s, i) => s + i.quantity, 0),
+    "Stock value: " +
+      money(inventory.reduce(
+        (s, i) => s + i.quantity * i.cost, 0
+      )),
     ""
   ];
 
-  inventory.forEach((item,index)=>{
+  inventory.forEach((item, index) => {
     lines.push(
-      (index+1)+". "+item.name,
-      "Quantity: "+item.quantity,
-      "Purchased: "+(item.purchaseDate||"Not entered"),
-      "Supplier: "+(item.store||"Not entered"),
-      "Cost per unit: "+money(item.cost),
-      "Stock value: "+money(item.quantity*item.cost),
-      "Notes: "+(item.notes||"None"),
+      (index + 1) + ". " + item.name,
+      "Quantity: " + item.quantity,
+      "Purchased: " + (item.purchaseDate || "Not entered"),
+      "Supplier: " + (item.store || "Not entered"),
+      "Cost per unit: " + money(item.cost),
+      "Stock value: " +
+        money(item.quantity * item.cost),
+      "Notes: " + (item.notes || "None"),
       ""
     );
   });
+
   return lines.join("\n");
 }
 
-$("shareEmail").onclick=()=>{
-  location.href="mailto:?subject="+
-    encodeURIComponent(appName+" Inventory Report")+
-    "&body="+encodeURIComponent(reportText());
+$("shareEmail").onclick = () => {
+  location.href = "mailto:?subject=" +
+    encodeURIComponent(appName + " Inventory Report") +
+    "&body=" + encodeURIComponent(reportText());
 };
 
-$("shareText").onclick=()=>{
-  location.href="sms:?&body="+
+$("shareText").onclick = () => {
+  location.href = "sms:?&body=" +
     encodeURIComponent(reportText());
 };
 
-async function nativeShare(){
-  if(navigator.share){
-    try{
+async function nativeShare() {
+  if(navigator.share) {
+    try {
       await navigator.share({
-        title:appName+" Inventory Report",
-        text:reportText()
+        title: appName + " Inventory Report",
+        text: reportText()
       });
-    }catch(e){
-      if(e.name!=="AbortError"){
+    } catch(e) {
+      if(e.name !== "AbortError") {
         alert("Sharing was not completed.");
       }
     }
-  }else{
-    try{
+  } else {
+    try {
       await navigator.clipboard.writeText(reportText());
       alert("Report copied. Paste it into an app.");
-    }catch(e){
+    } catch(e) {
       alert("Sharing is unavailable.");
     }
   }
 }
 
-$("shareNative").onclick=nativeShare;
-$("shareMessenger").onclick=nativeShare;
+$("shareNative").onclick = nativeShare;
+$("shareMessenger").onclick = nativeShare;
 
-$("sharePrint").onclick=()=>{
-  const win=window.open("","_blank");
-  if(!win){
+$("sharePrint").onclick = () => {
+  const win = window.open("", "_blank");
+
+  if(!win) {
     alert("Allow pop-ups to print.");
     return;
   }
 
   win.document.write(
-    '<!DOCTYPE html><html><head><meta charset="UTF-8">'+
-    '<title>Inventory Report</title>'+
-    '<style>body{font-family:Arial;padding:24px}'+
-    'pre{white-space:pre-wrap;font-family:Arial;'+
-    'line-height:1.6}</style></head><body>'+
+    '<!DOCTYPE html><html><head><meta charset="UTF-8">' +
+    '<title>Inventory Report</title>' +
+    '<style>body{font-family:Arial;padding:24px}' +
+    'pre{white-space:pre-wrap;font-family:Arial;' +
+    'line-height:1.6}</style></head><body>' +
     '<pre id="report"></pre></body></html>'
   );
+
   win.document.close();
   win.document.getElementById("report")
-    .textContent=reportText();
+    .textContent = reportText();
+
   win.focus();
-  setTimeout(()=>win.print(),250);
+  setTimeout(() => win.print(), 250);
 };
 
-$("shareButton").onclick=()=>
+// SHARE MODAL
+
+$("shareButton").onclick = () =>
   $("shareModal").classList.remove("hidden");
 
-$("closeShare").onclick=()=>
+$("closeShare").onclick = () =>
   $("shareModal").classList.add("hidden");
 
 // INTERACTIVE TUTORIAL
-const tutorialSteps=[
+
+const tutorialSteps = [
   {
-    title:"Welcome to Inventory",
-    description:"This is your inventory dashboard. It shows how many different items you have, the total number of units, and the total value of your stock.",
-    picture:`
+    title: "Welcome to Inventory",
+    description: "This is your inventory dashboard. It shows how many different items you have, the total number of units, and the total value of your stock.",
+    picture: `
       <div class="demo-phone">
         <div class="demo-header">Inventory</div>
         <div class="demo-row">
@@ -861,9 +1405,9 @@ const tutorialSteps=[
       </div>`
   },
   {
-    title:"Add Your First Inventory Item",
-    description:"Type the item name, enter the quantity you currently have, and tap Add Inventory. This tutorial uses examples and will not add anything to your real list.",
-    picture:`
+    title: "Add Your First Inventory Item",
+    description: "Type the item name, enter the quantity you currently have, and tap Add Inventory. This tutorial uses examples and will not add anything to your real list.",
+    picture: `
       <div class="demo-phone">
         <div class="demo-header">Add Inventory</div>
         <div class="demo-box">Inventory Name<br><strong>Shampoo</strong></div>
@@ -872,9 +1416,9 @@ const tutorialSteps=[
       </div>`
   },
   {
-    title:"Increase or Decrease Stock",
-    description:"Tap the plus button when you receive more stock, or the minus button when an item is sold, used, or removed. Every change is recorded in inventory history.",
-    picture:`
+    title: "Increase or Decrease Stock",
+    description: "Tap the plus button when you receive more stock, or the minus button when an item is sold, used, or removed. Every change is recorded in inventory history.",
+    picture: `
       <div class="demo-phone">
         <div class="demo-header">Inventory List</div>
         <div class="demo-box demo-row">
@@ -885,9 +1429,9 @@ const tutorialSteps=[
       </div>`
   },
   {
-    title:"Open an Item Profile",
-    description:"Tap an inventory item's name to open its profile. You can change the name, quantity, and purchase information.",
-    picture:`
+    title: "Open an Item Profile",
+    description: "Tap an inventory item's name to open its profile. You can change the name, quantity, and purchase information.",
+    picture: `
       <div class="demo-phone">
         <div class="demo-header">Inventory List</div>
         <div class="demo-box demo-row">
@@ -898,9 +1442,9 @@ const tutorialSteps=[
       </div>`
   },
   {
-    title:"Enter Purchase Details",
-    description:"Inside the item profile, enter the purchase date, store or supplier, cost per unit, and any notes. Tap Save Changes when finished.",
-    picture:`
+    title: "Enter Purchase Details",
+    description: "Inside the item profile, enter the purchase date, store or supplier, cost per unit, and any notes. Tap Save Changes when finished.",
+    picture: `
       <div class="demo-phone">
         <div class="demo-header">Inventory Profile</div>
         <div class="demo-box">Purchased: 10/15/2026</div>
@@ -910,9 +1454,9 @@ const tutorialSteps=[
       </div>`
   },
   {
-    title:"Review Inventory History",
-    description:"Tap History to see when inventory was added, increased, decreased, edited, or deleted. You can also view history inside an individual item's profile.",
-    picture:`
+    title: "Review Inventory History",
+    description: "Tap History to see when inventory was added, increased, decreased, edited, or deleted. You can also view history inside an individual item's profile.",
+    picture: `
       <div class="demo-phone">
         <div class="demo-header">Inventory History</div>
         <div class="demo-box demo-highlight">
@@ -925,9 +1469,9 @@ const tutorialSteps=[
       </div>`
   },
   {
-    title:"Share or Save Reports",
-    description:"Tap Share at the top of the app. You can download a CSV report, prepare an email or text, use the device's sharing menu, or print your inventory.",
-    picture:`
+    title: "Share or Save Reports",
+    description: "Tap Share at the top of the app. You can download a CSV report, prepare an email or text, use the device's sharing menu, or print your inventory.",
+    picture: `
       <div class="demo-phone">
         <div class="demo-header">↗ Share Inventory</div>
         <div class="demo-row">
@@ -942,9 +1486,9 @@ const tutorialSteps=[
       </div>`
   },
   {
-    title:"Rename Your App",
-    description:"Tap the pencil icon beside Inventory at the top of the screen. Enter a new title, such as Barbershop Inventory, and save it. You can change it again whenever you want.",
-    picture:`
+    title: "Rename Your App",
+    description: "Tap the pencil icon beside Inventory at the top of the screen. Enter a new title, such as Barbershop Inventory, and save it. You can change it again whenever you want.",
+    picture: `
       <div class="demo-phone">
         <div class="demo-header demo-highlight">Inventory &nbsp; ✎</div>
         <div class="demo-box">New App Title<br>
@@ -955,59 +1499,71 @@ const tutorialSteps=[
   }
 ];
 
-let tutorialIndex=0;
+let tutorialIndex = 0;
 
-function renderTutorial(){
-  const step=tutorialSteps[tutorialIndex];
-  $("tutorialCounter").textContent=
-    "Step "+(tutorialIndex+1)+" of "+tutorialSteps.length;
-  $("tutorialTitle").textContent=step.title;
-  $("tutorialDescription").textContent=step.description;
-  $("tutorialPicture").innerHTML=step.picture;
-  $("tutorialProgress").style.width=
-    ((tutorialIndex+1)/tutorialSteps.length*100)+"%";
-  $("tutorialBack").disabled=tutorialIndex===0;
-  $("tutorialNext").textContent=
-    tutorialIndex===tutorialSteps.length-1?
-    "Finish ✓":"Next →";
+function renderTutorial() {
+  const step = tutorialSteps[tutorialIndex];
+
+  $("tutorialCounter").textContent =
+    "Step " + (tutorialIndex + 1) +
+    " of " + tutorialSteps.length;
+
+  $("tutorialTitle").textContent = step.title;
+  $("tutorialDescription").textContent =
+    step.description;
+
+  $("tutorialPicture").innerHTML = step.picture;
+
+  $("tutorialProgress").style.width =
+    ((tutorialIndex + 1) /
+      tutorialSteps.length * 100) + "%";
+
+  $("tutorialBack").disabled = tutorialIndex === 0;
+
+  $("tutorialNext").textContent =
+    tutorialIndex === tutorialSteps.length - 1
+      ? "Finish ✓"
+      : "Next →";
 }
 
-$("tutorialButton").onclick=()=>{
-  tutorialIndex=0;
+$("tutorialButton").onclick = () => {
+  tutorialIndex = 0;
   renderTutorial();
   $("tutorialModal").classList.remove("hidden");
 };
 
-$("tutorialBack").onclick=()=>{
-  if(tutorialIndex>0){
+$("tutorialBack").onclick = () => {
+  if(tutorialIndex > 0) {
     tutorialIndex--;
     renderTutorial();
   }
 };
 
-$("tutorialNext").onclick=()=>{
-  if(tutorialIndex<tutorialSteps.length-1){
+$("tutorialNext").onclick = () => {
+  if(tutorialIndex < tutorialSteps.length - 1) {
     tutorialIndex++;
     renderTutorial();
-  }else{
+  } else {
     $("tutorialModal").classList.add("hidden");
   }
 };
 
-$("closeTutorial").onclick=()=>
+$("closeTutorial").onclick = () =>
   $("tutorialModal").classList.add("hidden");
 
 // CLOSE MODALS
-["renameModal","shareModal","tutorialModal"].forEach(id=>{
-  $(id).addEventListener("click",e=>{
-    if(e.target===$(id)){
-      $(id).classList.add("hidden");
-    }
-  });
-});
 
-document.addEventListener("keydown",e=>{
-  if(e.key==="Escape"){
+["renameModal", "shareModal", "tutorialModal"]
+  .forEach(id => {
+    $(id).addEventListener("click", e => {
+      if(e.target === $(id)) {
+        $(id).classList.add("hidden");
+      }
+    });
+  });
+
+document.addEventListener("keydown", e => {
+  if(e.key === "Escape") {
     $("renameModal").classList.add("hidden");
     $("shareModal").classList.add("hidden");
     $("tutorialModal").classList.add("hidden");
@@ -1015,8 +1571,9 @@ document.addEventListener("keydown",e=>{
 });
 
 // INITIALIZE
+
 renderInventory();
+
 </script>
 </body>
 </html>
-
