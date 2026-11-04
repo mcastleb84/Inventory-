@@ -1,1253 +1,1214 @@
 
-
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#123c4a">
-
 <title>Inventory</title>
 
 <style>
-
-* {
-
-  box-sizing: border-box;
-
-}
+* { box-sizing: border-box; }
 
 body {
-
   margin: 0;
-
   font-family: Arial, sans-serif;
-
   background: #edf2f4;
-
   color: #203640;
-
 }
 
-header {
-
-  background: #123c4a;
-
-  color: white;
-
-  padding: 24px 18px;
-
-  text-align: center;
-
-}
-
-header h1 {
-
-  margin: 0;
-
-  font-size: 30px;
-
-}
-
-header p {
-
-  margin-bottom: 0;
-
-  color: #d0e7eb;
-
-}
-
-.container {
-
-  max-width: 850px;
-
-  margin: auto;
-
-  padding: 16px;
-
-}
-
-.card {
-
-  background: white;
-
-  padding: 18px;
-
-  margin-bottom: 16px;
-
-  border-radius: 12px;
-
-  box-shadow: 0 2px 8px #00000012;
-
-}
-
-h2 {
-
-  font-size: 19px;
-
-  margin-top: 0;
-
-}
-
-.stats {
-
-  display: grid;
-
-  grid-template-columns: repeat(3, 1fr);
-
-  gap: 10px;
-
-  margin-bottom: 16px;
-
-}
-
-.stat {
-
-  background: white;
-
-  border-radius: 12px;
-
-  padding: 14px 8px;
-
-  text-align: center;
-
-}
-
-.stat strong {
-
-  display: block;
-
-  color: #087b89;
-
-  font-size: 23px;
-
-  margin-bottom: 6px;
-
-}
-
-.stat span {
-
-  font-size: 12px;
-
-}
-
-label {
-
-  display: block;
-
-  font-weight: bold;
-
-  margin: 12px 0 6px;
-
-  font-size: 14px;
-
-}
-
-input, textarea {
-
-  width: 100%;
-
-  padding: 12px;
-
-  border: 1px solid #ccd7dc;
-
-  border-radius: 8px;
-
-  font-size: 16px;
-
-  font-family: inherit;
-
-}
-
-textarea {
-
-  min-height: 80px;
-
-  resize: vertical;
-
+button, input, textarea, select {
+  font: inherit;
 }
 
 button {
-
-  border: none;
-
+  border: 0;
   border-radius: 8px;
-
-  padding: 11px 15px;
-
-  font-size: 14px;
-
+  padding: 10px 13px;
   font-weight: bold;
-
   cursor: pointer;
+}
 
+header {
+  background: #123c4a;
+  color: white;
+  padding: 20px 16px;
+}
+
+.header-row {
+  max-width: 900px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.title-area {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+h1 {
+  font-size: 26px;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+header button {
+  background: #ffffff25;
+  color: white;
+}
+
+header p {
+  max-width: 900px;
+  margin: 10px auto 0;
+  color: #d0e7eb;
+  font-size: 14px;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 16px;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px #00000012;
+}
+
+h2 {
+  font-size: 19px;
+  margin: 0 0 15px;
+}
+
+h3 {
+  font-size: 16px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.stat {
+  background: white;
+  border-radius: 12px;
+  padding: 15px 7px;
+  text-align: center;
+}
+
+.stat strong {
+  display: block;
+  font-size: 22px;
+  color: #087b89;
+  overflow-wrap: anywhere;
+}
+
+.stat span {
+  font-size: 12px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin: 12px 0 6px;
+  font-size: 14px;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccd7dc;
+  border-radius: 8px;
+  background: white;
+  color: #203640;
+}
+
+textarea {
+  min-height: 80px;
+  resize: vertical;
 }
 
 .primary {
-
   background: #087b89;
-
   color: white;
-
 }
 
 .secondary {
-
   background: #e1ecef;
-
   color: #123c4a;
-
 }
 
 .danger {
-
   background: #b73535;
-
   color: white;
-
 }
 
 .full {
-
   width: 100%;
-
   margin-top: 14px;
-
 }
 
 .form-row {
-
   display: grid;
-
   grid-template-columns: 2fr 1fr;
-
   gap: 12px;
+}
 
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.actions button {
+  flex: 1;
+}
+
+.nav {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.nav button {
+  flex: 1;
 }
 
 .inventory-item {
-
   padding: 14px 0;
-
   border-bottom: 1px solid #e5ebee;
-
 }
 
 .item-top {
-
   display: flex;
-
   justify-content: space-between;
-
   align-items: center;
-
   gap: 10px;
-
 }
 
 .item-name {
-
   background: none;
-
   color: #087b89;
-
   text-decoration: underline;
-
   text-align: left;
-
   padding: 5px 0;
-
-  font-size: 17px;
-
   overflow-wrap: anywhere;
-
 }
 
 .quantity-controls {
-
   display: flex;
-
   align-items: center;
-
   gap: 9px;
-
 }
 
 .quantity-controls button {
-
-  padding: 8px 12px;
-
   background: #e1ecef;
-
   color: #123c4a;
-
   font-size: 18px;
-
 }
 
 .item-details {
-
-  color: #657680;
-
   font-size: 13px;
-
+  color: #657680;
   margin-top: 8px;
-
 }
 
-.profile-actions {
-
-  display: flex;
-
-  gap: 10px;
-
-  margin-top: 18px;
-
+.history-entry {
+  border-bottom: 1px solid #e5ebee;
+  padding: 13px 0;
 }
 
-.profile-actions button {
+.history-entry strong {
+  color: #087b89;
+}
 
-  flex: 1;
+.history-entry p {
+  margin: 5px 0;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
 
+.history-date {
+  font-size: 12px;
+  color: #71818a;
 }
 
 .hidden {
-
-  display: none;
-
+  display: none !important;
 }
 
 .empty {
-
   text-align: center;
-
   color: #71818a;
-
   padding: 20px;
+}
 
+.modal {
+  position: fixed;
+  inset: 0;
+  background: #0009;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 10;
+}
+
+.modal-content {
+  background: white;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 14px;
+  padding: 20px;
+  max-height: 90vh;
+  overflow: auto;
+}
+
+.share-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.share-options button {
+  background: #e1ecef;
+  color: #123c4a;
 }
 
 footer {
-
   text-align: center;
-
   padding: 20px;
-
   font-size: 12px;
-
   color: #74838b;
-
 }
 
 @media(max-width: 480px) {
-
-  .stats {
-
-    gap: 6px;
-
-  }
-
-  .stat strong {
-
-    font-size: 20px;
-
-  }
-
-  .container {
-
-    padding: 12px;
-
-  }
-
-  .profile-actions {
-
-    flex-direction: column;
-
-  }
-
+  .container { padding: 12px; }
+  .stat strong { font-size: 19px; }
+  .actions { flex-direction: column; }
+  h1 { font-size: 23px; }
+  .header-row { align-items: flex-start; }
 }
 
+@media print {
+  header button, .no-print, .modal, footer {
+    display: none !important;
+  }
+  body { background: white; }
+  .card, .stat {
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+}
 </style>
-
 </head>
 
 <body>
 
 <header>
-
-  <h1>Inventory</h1>
-
+  <div class="header-row">
+    <div class="title-area">
+      <h1 id="appTitle">Inventory</h1>
+      <button id="renameButton" type="button"
+        aria-label="Rename app">✎</button>
+    </div>
+    <button id="shareButton" type="button">↗ Share</button>
+  </div>
   <p>Keep your items organized and accounted for.</p>
-
 </header>
 
 <main class="container">
 
-  <!-- DASHBOARD -->
+<!-- NAVIGATION -->
+<div class="nav no-print">
+  <button class="primary" id="inventoryNav"
+    type="button">Inventory</button>
+  <button class="secondary" id="historyNav"
+    type="button">History</button>
+</div>
 
-  <section id="dashboard">
+<!-- DASHBOARD -->
+<section id="dashboard">
 
-    <div class="stats">
+<div class="stats">
+  <div class="stat">
+    <strong id="totalItems">0</strong>
+    <span>Unique Items</span>
+  </div>
+  <div class="stat">
+    <strong id="totalUnits">0</strong>
+    <span>Total Units</span>
+  </div>
+  <div class="stat">
+    <strong id="totalValue">$0.00</strong>
+    <span>Stock Value</span>
+  </div>
+</div>
 
-      <div class="stat">
-
-        <strong id="totalItems">0</strong>
-
-        <span>Unique Items</span>
-
+<div class="card no-print">
+  <h2>Add Inventory</h2>
+  <form id="addForm">
+    <div class="form-row">
+      <div>
+        <label for="newName">Inventory Name</label>
+        <input id="newName"
+          placeholder="Example: Shampoo" required>
       </div>
-
-      <div class="stat">
-
-        <strong id="totalUnits">0</strong>
-
-        <span>Total Units</span>
-
+      <div>
+        <label for="newQuantity">Quantity</label>
+        <input id="newQuantity" type="number"
+          min="0" step="1" value="1" required>
       </div>
-
-      <div class="stat">
-
-        <strong id="totalValue">$0.00</strong>
-
-        <span>Stock Value</span>
-
-      </div>
-
     </div>
-
-    <!-- ADD INVENTORY -->
-
-    <div class="card">
-
-      <h2>Add Inventory</h2>
-
-      <form id="addForm">
-
-        <div class="form-row">
-
-          <div>
-
-            <label for="newName">Inventory Name</label>
-
-            <input
-
-              id="newName"
-
-              type="text"
-
-              placeholder="Example: Shampoo"
-
-              required
-
-            >
-
-          </div>
-
-          <div>
-
-            <label for="newQuantity">Quantity</label>
-
-            <input
-
-              id="newQuantity"
-
-              type="number"
-
-              min="0"
-
-              step="1"
-
-              value="1"
-
-              required
-
-            >
-
-          </div>
-
-        </div>
-
-        <button class="primary full" type="submit">
-
-          + Add Inventory
-
-        </button>
-
-      </form>
-
-    </div>
-
-    <!-- INVENTORY LIST -->
-
-    <div class="card">
-
-      <h2>Inventory List</h2>
-
-      <input
-
-        id="searchInput"
-
-        type="search"
-
-        placeholder="Search inventory..."
-
-      >
-
-      <div id="inventoryList"></div>
-
-    </div>
-
-  </section>
-
-  <!-- ITEM PROFILE -->
-
-  <section id="profilePage" class="hidden">
-
-    <button
-
-      class="secondary"
-
-      type="button"
-
-      onclick="showDashboard()"
-
-    >
-
-      ← Back to Inventory
-
+    <button type="submit" class="primary full">
+      + Add Inventory
     </button>
+  </form>
+</div>
 
-    <div class="card" style="margin-top:16px">
+<div class="card">
+  <h2>Inventory List</h2>
+  <input id="searchInput" class="no-print"
+    type="search" placeholder="Search inventory...">
+  <div id="inventoryList"></div>
+</div>
 
-      <h2>Inventory Profile</h2>
+</section>
 
-      <form id="profileForm">
+<!-- ITEM PROFILE -->
+<section id="profilePage" class="hidden">
 
-        <label for="profileName">Inventory Name</label>
+<button class="secondary no-print" type="button"
+  id="backButton">← Back to Inventory</button>
 
-        <input id="profileName" required>
+<div class="card" style="margin-top:16px">
+  <h2>Inventory Profile</h2>
 
-        <label for="profileQuantity">Current Quantity</label>
+  <form id="profileForm">
+    <label for="profileName">Inventory Name</label>
+    <input id="profileName" required>
 
-        <input
+    <label for="profileQuantity">Current Quantity</label>
+    <input id="profileQuantity" type="number"
+      min="0" step="1" required>
 
-          id="profileQuantity"
+    <label for="purchaseDate">Date Purchased</label>
+    <input id="purchaseDate" type="date">
 
-          type="number"
+    <label for="purchaseStore">
+      Where Was It Purchased?
+    </label>
+    <input id="purchaseStore"
+      placeholder="Store or supplier">
 
-          min="0"
+    <label for="purchaseCost">Cost Per Unit ($)</label>
+    <input id="purchaseCost" type="number"
+      min="0" step="0.01" placeholder="0.00">
 
-          step="1"
+    <label for="profileNotes">Additional Notes</label>
+    <textarea id="profileNotes"
+      placeholder="Item details..."></textarea>
 
-          required
+    <label for="changeReason">
+      Reason for Changes (Optional)
+    </label>
+    <input id="changeReason"
+      placeholder="Example: Restocked, sold, damaged">
 
-        >
-
-        <label for="purchaseDate">Date Purchased</label>
-
-        <input id="purchaseDate" type="date">
-
-        <label for="purchaseStore">
-
-          Where Was It Purchased?
-
-        </label>
-
-        <input
-
-          id="purchaseStore"
-
-          placeholder="Store or supplier name"
-
-        >
-
-        <label for="purchaseCost">
-
-          Cost Per Unit ($)
-
-        </label>
-
-        <input
-
-          id="purchaseCost"
-
-          type="number"
-
-          min="0"
-
-          step="0.01"
-
-          placeholder="0.00"
-
-        >
-
-        <label for="profileNotes">Additional Notes</label>
-
-        <textarea
-
-          id="profileNotes"
-
-          placeholder="Add item details..."
-
-        ></textarea>
-
-        <div class="card" style="background:#f3f7f8">
-
-          <strong>Total Inventory Value</strong>
-
-          <p id="profileValue">$0.00</p>
-
-        </div>
-
-        <div class="profile-actions">
-
-          <button class="primary" type="submit">
-
-            Save Changes
-
-          </button>
-
-          <button
-
-            class="danger"
-
-            type="button"
-
-            onclick="deleteItem()"
-
-          >
-
-            Delete Item
-
-          </button>
-
-        </div>
-
-      </form>
-
+    <div class="card"
+      style="background:#f3f7f8;margin-top:15px">
+      <strong>Total Inventory Value</strong>
+      <p id="profileValue">$0.00</p>
     </div>
 
-  </section>
+    <div class="actions no-print">
+      <button type="submit" class="primary">
+        Save Changes
+      </button>
+      <button type="button" class="danger"
+        id="deleteButton">Delete Item</button>
+    </div>
+  </form>
+</div>
+
+<div class="card">
+  <h2>Item History</h2>
+  <div id="itemHistory"></div>
+</div>
+
+</section>
+
+<!-- FULL HISTORY -->
+<section id="historyPage" class="hidden">
+
+<div class="card">
+  <h2>Inventory History</h2>
+
+  <label for="historySearch">Search History</label>
+  <input id="historySearch" type="search"
+    placeholder="Search item or reason...">
+
+  <label for="historyFilter">Filter by Action</label>
+  <select id="historyFilter">
+    <option value="all">All Activity</option>
+    <option value="Added">Added</option>
+    <option value="Increased">Increased</option>
+    <option value="Decreased">Decreased</option>
+    <option value="Edited">Edited</option>
+    <option value="Deleted">Deleted</option>
+  </select>
+
+  <button class="secondary full no-print"
+    id="exportHistory" type="button">
+    Download History CSV
+  </button>
+
+  <div id="fullHistory"></div>
+</div>
+
+</section>
 
 </main>
 
 <footer>
-
-  Inventory App | Your information is saved on this device
-
+  Inventory and history are saved locally in this browser.
 </footer>
 
-<script>
+<!-- RENAME MODAL -->
+<div id="renameModal" class="modal hidden"
+  role="dialog" aria-modal="true">
+  <div class="modal-content">
+    <h2>Change App Title</h2>
+    <form id="renameForm">
+      <label for="newTitle">New App Title</label>
+      <input id="newTitle" maxlength="80" required>
+      <div class="actions">
+        <button type="submit" class="primary">
+          Save Title
+        </button>
+        <button type="button" class="secondary"
+          id="cancelRename">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
 
+<!-- SHARE MODAL -->
+<div id="shareModal" class="modal hidden"
+  role="dialog" aria-modal="true">
+  <div class="modal-content">
+    <h2>Share Inventory</h2>
+    <p>Save or share your inventory report.</p>
+    <div class="share-options">
+      <button id="saveCSV" type="button">Save CSV</button>
+      <button id="shareEmail" type="button">Email</button>
+      <button id="shareText" type="button">Text</button>
+      <button id="shareMessenger" type="button">
+        Messenger
+      </button>
+      <button id="shareNative" type="button">
+        More / Save
+      </button>
+      <button id="sharePrint" type="button">Print</button>
+    </div>
+    <button class="secondary full" id="closeShare"
+      type="button">Close</button>
+  </div>
+</div>
+
+<script>
 "use strict";
 
-// LOCAL STORAGE
-
 const STORAGE_KEY = "inventory_app_v1";
+const TITLE_KEY = "inventory_app_title_v1";
+const HISTORY_KEY = "inventory_app_history_v1";
 
-let inventory = loadInventory();
+const $ = id => document.getElementById(id);
 
-let activeItemId = null;
-
-function loadInventory() {
-
+function loadArray(key) {
   try {
-
-    const saved = localStorage.getItem(STORAGE_KEY);
-
-    const parsed = saved ? JSON.parse(saved) : [];
-
+    const parsed = JSON.parse(
+      localStorage.getItem(key) || "[]"
+    );
     return Array.isArray(parsed) ? parsed : [];
-
-  } catch (error) {
-
-    console.error("Unable to load inventory:", error);
-
+  } catch(e) {
+    console.error(e);
     return [];
-
   }
-
 }
 
-function saveInventory() {
+let inventory = loadArray(STORAGE_KEY);
+let history = loadArray(HISTORY_KEY);
+let activeItemId = null;
+let appName = localStorage.getItem(TITLE_KEY)
+  || "Inventory";
 
+function persist() {
   try {
-
     localStorage.setItem(
-
-      STORAGE_KEY,
-
-      JSON.stringify(inventory)
-
+      STORAGE_KEY, JSON.stringify(inventory)
     );
-
+    localStorage.setItem(
+      HISTORY_KEY, JSON.stringify(history)
+    );
     return true;
-
-  } catch (error) {
-
-    alert(
-
-      "Unable to save. Check browser storage settings."
-
-    );
-
+  } catch(e) {
+    alert("Unable to save. Check browser storage.");
     return false;
-
   }
-
 }
 
-function money(amount) {
-
+function money(value) {
   return new Intl.NumberFormat("en-US", {
-
     style: "currency",
-
     currency: "USD"
-
-  }).format(amount || 0);
-
+  }).format(value || 0);
 }
 
 function createId() {
-
-  if (window.crypto && crypto.randomUUID) {
-
-    return crypto.randomUUID();
-
-  }
-
-  return Date.now().toString() +
-
-    Math.random().toString(36).slice(2);
-
+  return window.crypto?.randomUUID?.()
+    || Date.now() + "-" +
+       Math.random().toString(36).slice(2);
 }
 
 function getItem(id) {
-
   return inventory.find(item => item.id === id);
-
 }
 
-// ADD INVENTORY
-
-document.getElementById("addForm")
-
-  .addEventListener("submit", function(event) {
-
-    event.preventDefault();
-
-    const name = document
-
-      .getElementById("newName")
-
-      .value.trim();
-
-    const quantity = Number(
-
-      document.getElementById("newQuantity").value
-
-    );
-
-    if (
-
-      !name ||
-
-      !Number.isSafeInteger(quantity) ||
-
-      quantity < 0
-
-    ) {
-
-      alert("Enter a valid name and whole-number quantity.");
-
-      return;
-
-    }
-
-    const item = {
-
-      id: createId(),
-
-      name: name,
-
-      quantity: quantity,
-
-      purchaseDate: "",
-
-      store: "",
-
-      cost: 0,
-
-      notes: ""
-
-    };
-
-    inventory.push(item);
-
-    if (!saveInventory()) {
-
-      inventory.pop();
-
-      return;
-
-    }
-
-    document.getElementById("addForm").reset();
-
-    document.getElementById("newQuantity").value = 1;
-
-    renderInventory();
-
+function recordHistory(item, action, change, reason) {
+  history.unshift({
+    id: createId(),
+    itemId: item.id,
+    name: item.name,
+    action,
+    change,
+    quantityAfter: item.quantity,
+    reason: reason || "",
+    date: new Date().toISOString()
   });
+}
 
-// DISPLAY INVENTORY
+function updateTitle() {
+  $("appTitle").textContent = appName;
+  document.title = appName;
+}
 
+updateTitle();
+
+// NAVIGATION
+function showPage(page) {
+  ["dashboard", "profilePage", "historyPage"]
+    .forEach(id => $(id).classList.add("hidden"));
+
+  $(page).classList.remove("hidden");
+
+  $("inventoryNav").className =
+    page === "historyPage" ? "secondary" : "primary";
+
+  $("historyNav").className =
+    page === "historyPage" ? "primary" : "secondary";
+
+  if(page === "dashboard") renderInventory();
+  if(page === "historyPage") renderHistory();
+
+  window.scrollTo(0, 0);
+}
+
+$("inventoryNav").onclick = () => showPage("dashboard");
+$("historyNav").onclick = () => showPage("historyPage");
+$("backButton").onclick = () => showPage("dashboard");
+
+// ADD INVENTORY
+$("addForm").addEventListener("submit", e => {
+  e.preventDefault();
+
+  const name = $("newName").value.trim();
+  const quantity = Number($("newQuantity").value);
+
+  if(!name || !Number.isSafeInteger(quantity)
+     || quantity < 0) {
+    alert("Enter a valid name and quantity.");
+    return;
+  }
+
+  const item = {
+    id: createId(),
+    name,
+    quantity,
+    purchaseDate: "",
+    store: "",
+    cost: 0,
+    notes: ""
+  };
+
+  inventory.push(item);
+  recordHistory(item, "Added", quantity,
+    "Initial inventory");
+
+  if(!persist()) {
+    inventory.pop();
+    history.shift();
+    return;
+  }
+
+  $("addForm").reset();
+  $("newQuantity").value = 1;
+  renderInventory();
+});
+
+// INVENTORY DISPLAY
 function renderInventory() {
-
-  const list = document.getElementById("inventoryList");
-
-  const search = document
-
-    .getElementById("searchInput")
-
-    .value.toLowerCase();
-
+  const list = $("inventoryList");
   list.replaceChildren();
 
+  const search = $("searchInput").value.toLowerCase();
+
   const filtered = inventory.filter(item =>
-
     item.name.toLowerCase().includes(search)
-
   );
 
-  if (filtered.length === 0) {
-
-    const empty = document.createElement("p");
-
-    empty.className = "empty";
-
-    empty.textContent = inventory.length === 0
-
-      ? "No inventory added yet."
-
-      : "No matching inventory found.";
-
-    list.appendChild(empty);
-
+  if(!filtered.length) {
+    const p = document.createElement("p");
+    p.className = "empty";
+    p.textContent = inventory.length
+      ? "No matching items."
+      : "No inventory added yet.";
+    list.appendChild(p);
   }
 
   filtered.forEach(item => {
-
     const wrapper = document.createElement("div");
-
     wrapper.className = "inventory-item";
 
     const top = document.createElement("div");
-
     top.className = "item-top";
 
-    const nameButton = document.createElement("button");
-
-    nameButton.className = "item-name";
-
-    nameButton.type = "button";
-
-    nameButton.textContent = item.name;
-
-    nameButton.addEventListener("click", () => {
-
-      openProfile(item.id);
-
-    });
+    const name = document.createElement("button");
+    name.type = "button";
+    name.className = "item-name";
+    name.textContent = item.name;
+    name.onclick = () => openProfile(item.id);
 
     const controls = document.createElement("div");
-
-    controls.className = "quantity-controls";
+    controls.className = "quantity-controls no-print";
 
     const minus = document.createElement("button");
-
-    minus.type = "button";
-
     minus.textContent = "−";
-
-    minus.setAttribute(
-
-      "aria-label",
-
-      "Decrease quantity of " + item.name
-
-    );
-
-    minus.addEventListener("click", () => {
-
-      changeQuantity(item.id, -1);
-
-    });
+    minus.onclick = () => changeQuantity(item.id, -1);
 
     const count = document.createElement("strong");
-
     count.textContent = item.quantity;
 
     const plus = document.createElement("button");
-
-    plus.type = "button";
-
     plus.textContent = "+";
-
-    plus.setAttribute(
-
-      "aria-label",
-
-      "Increase quantity of " + item.name
-
-    );
-
-    plus.addEventListener("click", () => {
-
-      changeQuantity(item.id, 1);
-
-    });
+    plus.onclick = () => changeQuantity(item.id, 1);
 
     controls.append(minus, count, plus);
-
-    top.append(nameButton, controls);
+    top.append(name, controls);
 
     const details = document.createElement("div");
-
     details.className = "item-details";
-
     details.textContent =
-
-      "Value: " + money(item.quantity * item.cost);
+      "Quantity: " + item.quantity +
+      " | Stock value: " +
+      money(item.quantity * item.cost);
 
     wrapper.append(top, details);
-
     list.appendChild(wrapper);
-
   });
 
   updateDashboard();
-
 }
 
-// QUANTITY TRACKING
+function updateDashboard() {
+  $("totalItems").textContent = inventory.length;
 
-function changeQuantity(id, change) {
+  $("totalUnits").textContent = inventory.reduce(
+    (sum, item) => sum + item.quantity, 0
+  );
 
+  $("totalValue").textContent = money(
+    inventory.reduce(
+      (sum, item) =>
+        sum + item.quantity * item.cost, 0
+    )
+  );
+}
+
+// QUICK QUANTITY CHANGE
+function changeQuantity(id, delta) {
   const item = getItem(id);
-
-  if (!item) return;
+  if(!item) return;
 
   const oldQuantity = item.quantity;
+  const next = oldQuantity + delta;
 
-  const nextQuantity = oldQuantity + change;
+  if(next < 0 || !Number.isSafeInteger(next)) return;
 
-  if (
+  const oldHistory = history.slice();
 
-    nextQuantity < 0 ||
+  item.quantity = next;
 
-    !Number.isSafeInteger(nextQuantity)
+  recordHistory(
+    item,
+    delta > 0 ? "Increased" : "Decreased",
+    delta,
+    delta > 0 ? "Quick restock" : "Quick removal"
+  );
 
-  ) {
-
-    return;
-
-  }
-
-  item.quantity = nextQuantity;
-
-  if (!saveInventory()) {
-
+  if(!persist()) {
     item.quantity = oldQuantity;
-
+    history = oldHistory;
     return;
-
   }
 
   renderInventory();
-
 }
 
-// DASHBOARD TOTALS
-
-function updateDashboard() {
-
-  const totalItems = inventory.length;
-
-  const totalUnits = inventory.reduce(
-
-    (sum, item) => sum + item.quantity,
-
-    0
-
-  );
-
-  const totalValue = inventory.reduce(
-
-    (sum, item) =>
-
-      sum + item.quantity * item.cost,
-
-    0
-
-  );
-
-  document.getElementById("totalItems")
-
-    .textContent = totalItems;
-
-  document.getElementById("totalUnits")
-
-    .textContent = totalUnits;
-
-  document.getElementById("totalValue")
-
-    .textContent = money(totalValue);
-
-}
-
-// OPEN PROFILE
-
+// ITEM PROFILE
 function openProfile(id) {
-
   const item = getItem(id);
-
-  if (!item) return;
+  if(!item) return;
 
   activeItemId = id;
 
-  document.getElementById("profileName")
-
-    .value = item.name;
-
-  document.getElementById("profileQuantity")
-
-    .value = item.quantity;
-
-  document.getElementById("purchaseDate")
-
-    .value = item.purchaseDate || "";
-
-  document.getElementById("purchaseStore")
-
-    .value = item.store || "";
-
-  document.getElementById("purchaseCost")
-
-    .value = item.cost || "";
-
-  document.getElementById("profileNotes")
-
-    .value = item.notes || "";
+  $("profileName").value = item.name;
+  $("profileQuantity").value = item.quantity;
+  $("purchaseDate").value = item.purchaseDate || "";
+  $("purchaseStore").value = item.store || "";
+  $("purchaseCost").value = item.cost || "";
+  $("profileNotes").value = item.notes || "";
+  $("changeReason").value = "";
 
   updateProfileValue();
-
-  document.getElementById("dashboard")
-
-    .classList.add("hidden");
-
-  document.getElementById("profilePage")
-
-    .classList.remove("hidden");
-
-  window.scrollTo(0, 0);
-
+  renderItemHistory(id);
+  showPage("profilePage");
 }
-
-// PROFILE TOTAL VALUE
 
 function updateProfileValue() {
+  const quantity =
+    Number($("profileQuantity").value) || 0;
+  const cost =
+    Number($("purchaseCost").value) || 0;
 
-  const quantity = Number(
-
-    document.getElementById("profileQuantity").value
-
-  ) || 0;
-
-  const cost = Number(
-
-    document.getElementById("purchaseCost").value
-
-  ) || 0;
-
-  document.getElementById("profileValue")
-
-    .textContent = money(quantity * cost);
-
+  $("profileValue").textContent =
+    money(quantity * cost);
 }
 
-document.getElementById("profileQuantity")
-
-  .addEventListener("input", updateProfileValue);
-
-document.getElementById("purchaseCost")
-
-  .addEventListener("input", updateProfileValue);
+$("profileQuantity").oninput = updateProfileValue;
+$("purchaseCost").oninput = updateProfileValue;
 
 // SAVE PROFILE
-
-document.getElementById("profileForm")
-
-  .addEventListener("submit", function(event) {
-
-    event.preventDefault();
-
-    const item = getItem(activeItemId);
-
-    if (!item) return;
-
-    const name = document
-
-      .getElementById("profileName")
-
-      .value.trim();
-
-    const quantity = Number(
-
-      document.getElementById("profileQuantity").value
-
-    );
-
-    const costInput = document
-
-      .getElementById("purchaseCost").value;
-
-    const cost = costInput === ""
-
-      ? 0
-
-      : Number(costInput);
-
-    if (
-
-      !name ||
-
-      !Number.isSafeInteger(quantity) ||
-
-      quantity < 0 ||
-
-      !Number.isFinite(cost) ||
-
-      cost < 0
-
-    ) {
-
-      alert("Please enter valid inventory information.");
-
-      return;
-
-    }
-
-    const previous = { ...item };
-
-    item.name = name;
-
-    item.quantity = quantity;
-
-    item.purchaseDate = document
-
-      .getElementById("purchaseDate").value;
-
-    item.store = document
-
-      .getElementById("purchaseStore")
-
-      .value.trim();
-
-    item.cost = cost;
-
-    item.notes = document
-
-      .getElementById("profileNotes")
-
-      .value.trim();
-
-    if (!saveInventory()) {
-
-      Object.assign(item, previous);
-
-      return;
-
-    }
-
-    showDashboard();
-
-  });
-
-// DELETE INVENTORY
-
-function deleteItem() {
+$("profileForm").addEventListener("submit", e => {
+  e.preventDefault();
 
   const item = getItem(activeItemId);
+  if(!item) return;
 
-  if (!item) return;
+  const name = $("profileName").value.trim();
+  const quantity = Number($("profileQuantity").value);
+  const cost = Number($("purchaseCost").value || 0);
 
-  const confirmed = confirm(
-
-    'Delete "' + item.name + '" from inventory?'
-
-  );
-
-  if (!confirmed) return;
-
-  const previousInventory = [...inventory];
-
-  inventory = inventory.filter(
-
-    record => record.id !== activeItemId
-
-  );
-
-  if (!saveInventory()) {
-
-    inventory = previousInventory;
-
+  if(!name || !Number.isSafeInteger(quantity)
+     || quantity < 0 || !Number.isFinite(cost)
+     || cost < 0) {
+    alert("Enter valid inventory information.");
     return;
-
   }
 
-  showDashboard();
+  const previous = {...item};
+  const previousHistory = history.slice();
 
-}
+  const reason = $("changeReason").value.trim();
 
-// RETURN TO DASHBOARD
+  Object.assign(item, {
+    name,
+    quantity,
+    purchaseDate: $("purchaseDate").value,
+    store: $("purchaseStore").value.trim(),
+    cost,
+    notes: $("profileNotes").value.trim()
+  });
 
-function showDashboard() {
+  const delta = quantity - previous.quantity;
+
+  const detailsChanged =
+    name !== previous.name ||
+    item.purchaseDate !== previous.purchaseDate ||
+    item.store !== previous.store ||
+    cost !== previous.cost ||
+    item.notes !== previous.notes;
+
+  if(delta !== 0) {
+    recordHistory(
+      item,
+      delta > 0 ? "Increased" : "Decreased",
+      delta,
+      reason || "Profile quantity update"
+    );
+  }
+
+  if(detailsChanged) {
+    recordHistory(
+      item, "Edited", 0,
+      reason || "Profile information updated"
+    );
+  }
+
+  if(!persist()) {
+    Object.assign(item, previous);
+    history = previousHistory;
+    return;
+  }
+
+  showPage("dashboard");
+});
+
+// DELETE ITEM
+$("deleteButton").onclick = () => {
+  const item = getItem(activeItemId);
+  if(!item) return;
+
+  if(!confirm('Delete "' + item.name + '"?')) return;
+
+  const oldInventory = inventory.slice();
+  const oldHistory = history.slice();
+
+  recordHistory(
+    item, "Deleted", -item.quantity,
+    "Inventory item deleted"
+  );
+
+  inventory = inventory.filter(
+    x => x.id !== activeItemId
+  );
+
+  if(!persist()) {
+    inventory = oldInventory;
+    history = oldHistory;
+    return;
+  }
 
   activeItemId = null;
+  showPage("dashboard");
+};
 
-  document.getElementById("profilePage")
+$("searchInput").oninput = renderInventory;
 
-    .classList.add("hidden");
+// HISTORY DISPLAY
+function historyElement(entry) {
+  const div = document.createElement("div");
+  div.className = "history-entry";
 
-  document.getElementById("dashboard")
+  const title = document.createElement("strong");
+  title.textContent =
+    entry.name + " — " + entry.action;
 
-    .classList.remove("hidden");
+  const date = document.createElement("div");
+  date.className = "history-date";
+  date.textContent =
+    new Date(entry.date).toLocaleString();
 
-  renderInventory();
+  const quantity = document.createElement("p");
+  quantity.textContent =
+    "Quantity change: " +
+    (entry.change > 0 ? "+" : "") +
+    entry.change +
+    " | Quantity after: " +
+    entry.quantityAfter;
 
-  window.scrollTo(0, 0);
+  const reason = document.createElement("p");
+  reason.textContent =
+    "Reason: " + (entry.reason || "Not specified");
 
+  div.append(title, date, quantity, reason);
+  return div;
 }
 
-// SEARCH
+function renderItemHistory(id) {
+  const container = $("itemHistory");
+  container.replaceChildren();
 
-document.getElementById("searchInput")
+  const entries = history.filter(
+    entry => entry.itemId === id
+  );
 
-  .addEventListener("input", renderInventory);
+  if(!entries.length) {
+    const p = document.createElement("p");
+    p.className = "empty";
+    p.textContent = "No history recorded yet.";
+    container.appendChild(p);
+    return;
+  }
 
-// INITIAL DISPLAY
+  entries.forEach(entry =>
+    container.appendChild(historyElement(entry))
+  );
+}
 
+function renderHistory() {
+  const container = $("fullHistory");
+  container.replaceChildren();
+
+  const search =
+    $("historySearch").value.toLowerCase();
+  const filter = $("historyFilter").value;
+
+  const entries = history.filter(entry => {
+    const matchesSearch =
+      entry.name.toLowerCase().includes(search) ||
+      (entry.reason || "").toLowerCase().includes(search);
+
+    const matchesFilter =
+      filter === "all" || entry.action === filter;
+
+    return matchesSearch && matchesFilter;
+  });
+
+  if(!entries.length) {
+    const p = document.createElement("p");
+    p.className = "empty";
+    p.textContent = "No matching history.";
+    container.appendChild(p);
+    return;
+  }
+
+  entries.forEach(entry =>
+    container.appendChild(historyElement(entry))
+  );
+}
+
+$("historySearch").oninput = renderHistory;
+$("historyFilter").onchange = renderHistory;
+
+// RENAME APP
+$("renameButton").onclick = () => {
+  $("newTitle").value = appName;
+  $("renameModal").classList.remove("hidden");
+};
+
+$("cancelRename").onclick = () =>
+  $("renameModal").classList.add("hidden");
+
+$("renameForm").addEventListener("submit", e => {
+  e.preventDefault();
+
+  const title = $("newTitle").value.trim();
+  if(!title) return;
+
+  try {
+    localStorage.setItem(TITLE_KEY, title);
+  } catch(e) {
+    alert("Unable to save title.");
+    return;
+  }
+
+  appName = title;
+  updateTitle();
+  $("renameModal").classList.add("hidden");
+});
+
+// EXPORT AND SHARING
+function csvCell(value) {
+  return '"' +
+    String(value ?? "").replace(/"/g, '""') +
+    '"';
+}
+
+function downloadCSV(filename, rows) {
+  const csv = "\uFEFF" + rows.map(
+    row => row.map(csvCell).join(",")
+  ).join("\r\n");
+
+  const blob = new Blob([csv], {
+    type: "text/csv;charset=utf-8"
+  });
+
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function inventoryCSV() {
+  const rows = [[
+    "Name", "Quantity", "Purchase Date",
+    "Supplier", "Cost Per Unit",
+    "Stock Value", "Notes"
+  ]];
+
+  inventory.forEach(item => rows.push([
+    item.name,
+    item.quantity,
+    item.purchaseDate,
+    item.store,
+    item.cost,
+    (item.quantity * item.cost).toFixed(2),
+    item.notes
+  ]));
+
+  return rows;
+}
+
+function historyCSV() {
+  const rows = [[
+    "Date", "Item", "Action",
+    "Quantity Change", "Quantity After", "Reason"
+  ]];
+
+  history.forEach(entry => rows.push([
+    entry.date,
+    entry.name,
+    entry.action,
+    entry.change,
+    entry.quantityAfter,
+    entry.reason
+  ]));
+
+  return rows;
+}
+
+$("saveCSV").onclick = () =>
+  downloadCSV("inventory-report.csv", inventoryCSV());
+
+$("exportHistory").onclick = () =>
+  downloadCSV("inventory-history.csv", historyCSV());
+
+function reportText() {
+  const lines = [
+    appName + " - Inventory Report",
+    "Date: " + new Date().toLocaleDateString(),
+    "",
+    "Unique items: " + inventory.length,
+    "Total units: " +
+      inventory.reduce((s, i) => s + i.quantity, 0),
+    "Stock value: " +
+      money(inventory.reduce(
+        (s, i) => s + i.quantity * i.cost, 0
+      )),
+    ""
+  ];
+
+  inventory.forEach((item, index) => {
+    lines.push(
+      (index + 1) + ". " + item.name,
+      "Quantity: " + item.quantity,
+      "Purchased: " + (item.purchaseDate || "Not entered"),
+      "Supplier: " + (item.store || "Not entered"),
+      "Cost per unit: " + money(item.cost),
+      "Stock value: " +
+        money(item.quantity * item.cost),
+      "Notes: " + (item.notes || "None"),
+      ""
+    );
+  });
+
+  return lines.join("\n");
+}
+
+$("shareEmail").onclick = () => {
+  location.href = "mailto:?subject=" +
+    encodeURIComponent(appName + " Inventory Report") +
+    "&body=" + encodeURIComponent(reportText());
+};
+
+$("shareText").onclick = () => {
+  location.href = "sms:?&body=" +
+    encodeURIComponent(reportText());
+};
+
+async function nativeShare() {
+  if(navigator.share) {
+    try {
+      await navigator.share({
+        title: appName + " Inventory Report",
+        text: reportText()
+      });
+    } catch(e) {
+      if(e.name !== "AbortError") {
+        alert("Sharing was not completed.");
+      }
+    }
+  } else {
+    try {
+      await navigator.clipboard.writeText(reportText());
+      alert("Report copied. Paste it into an app.");
+    } catch(e) {
+      alert("Sharing is unavailable.");
+    }
+  }
+}
+
+$("shareNative").onclick = nativeShare;
+$("shareMessenger").onclick = nativeShare;
+
+$("sharePrint").onclick = () => {
+  const win = window.open("", "_blank");
+
+  if(!win) {
+    alert("Allow pop-ups to print.");
+    return;
+  }
+
+  win.document.write(
+    '<!DOCTYPE html><html><head><meta charset="UTF-8">' +
+    '<title>Inventory Report</title>' +
+    '<style>body{font-family:Arial;padding:24px}' +
+    'pre{white-space:pre-wrap;font-family:Arial;' +
+    'line-height:1.6}</style></head><body>' +
+    '<pre id="report"></pre></body></html>'
+  );
+
+  win.document.close();
+  win.document.getElementById("report")
+    .textContent = reportText();
+
+  win.focus();
+  setTimeout(() => win.print(), 250);
+};
+
+// SHARE MODAL
+$("shareButton").onclick = () =>
+  $("shareModal").classList.remove("hidden");
+
+$("closeShare").onclick = () =>
+  $("shareModal").classList.add("hidden");
+
+// CLOSE MODALS
+["renameModal", "shareModal"].forEach(id => {
+  $(id).addEventListener("click", e => {
+    if(e.target === $(id)) {
+      $(id).classList.add("hidden");
+    }
+  });
+});
+
+document.addEventListener("keydown", e => {
+  if(e.key === "Escape") {
+    $("renameModal").classList.add("hidden");
+    $("shareModal").classList.add("hidden");
+  }
+});
+
+// INITIALIZE
 renderInventory();
-
 </script>
 
 </body>
-
 </html>
